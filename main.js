@@ -17,15 +17,12 @@ const Gameboard = (() => {
                     div.innerText = player2.mark;
                     board[e.target.id] = player2.mark;
                 } 
-                console.log(board);
-                // console.log(id, div.innerText);
                 if (move < 9) {
                     if(move > 3) {
                         //check if someone won
                         Game.checkWinner()
-                        console.log(Game.winner)
                     }
-                    if(move === 8)
+                    if(move === 8 && !Game.checkWinner())
                     console.log("Tie!");
                 }
                 move++;
@@ -54,22 +51,83 @@ const Game = (() => {
             if(Gameboard.board[item[0]] === player1.mark 
                 && Gameboard.board[item[1]] === player1.mark 
                 && Gameboard.board[item[2]] === player1.mark) {
-                console.log(`Winner ${player1.name}`);
-                winner = true; return winner;
+                Gameboard.divs[item[0]].style.border = "5px rgb(36, 252, 3) solid";
+                Gameboard.divs[item[1]].style.border = "5px rgb(36, 252, 3) solid";
+                Gameboard.divs[item[2]].style.border = "5px rgb(36, 252, 3) solid";
+                const p = document.getElementById("para");
+                p.classList.add("para");
+                p.innerText = `${player1.name} won!`;
+                winner = true;
             }
             else if(Gameboard.board[item[0]] === player2.mark 
                 && Gameboard.board[item[1]] === player2.mark 
                 && Gameboard.board[item[2]] === player2.mark) {
-                console.log(`Winner ${player2.name}`);
-                winner = true; return winner;
+                Gameboard.divs[item[0]].style.border = "5px rgb(36, 252, 3) solid";
+                Gameboard.divs[item[1]].style.border = "5px rgb(36, 252, 3) solid";
+                Gameboard.divs[item[2]].style.border = "5px rgb(36, 252, 3) solid";
+                const p = document.getElementById("para");
+                p.classList.add("para");
+                p.innerText = `${player2.name} won!`;
+                winner = true;
             }
-        })
-        return { winner }
+            if(winner === true) {
+                const body = document.
+                Array.from(Gameboard.divs).forEach(div => {
+                    div.classList.add("disable");
+                })
+            }
+        }) 
+        return winner; 
     }
-    return { winningArr, checkWinner, winner}
+    return { winningArr, checkWinner }
+})();
+//display functions
+const displayController = (() => {
+    const createTextBox = () => {
+        const div = document.createElement("div")
+        const input = document.createElement("input");
+        const submitBtn = document.createElement("button");
+        div.classList.add("name")
+        submitBtn.innerText = "Submit";
+        input.setAttribute("type", "text");
+        input.setAttribute("value", "Player 1");
+        input.classList.add("input");
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            display.p1.innerText = input.value;
+            display.nameDiv.appendChild(div);
+            div.appendChild(input);
+            div.appendChild(submitBtn);
+            console.log(display.nameDiv);
+        })
+    }
+    return { createTextBox }
 })();
 
-//display
-// const display = (() => {
+//display buttons, player names, who won
+const display = (() => {
+    // reset btn
+    let timesHovered = 0;
+    const main = document.getElementById("main")
+    const resetBtn = document.createElement("button");
+    resetBtn.innerText = "Play again";
+    resetBtn.addEventListener("click", () => {
+        location.reload();
+    })
+    resetBtn.classList.add("btn");
+    main.appendChild(resetBtn); 
+    const nameDiv = document.getElementById("nameDiv");
+    const p1 = document.getElementById("player1");
+    p1.addEventListener("mouseenter", () => { 
+        if(timesHovered === 0) {
+            displayController.createTextBox;
+            timesHovered++;
+            console.log(timesHovered)
+        }
+    });
+    p1.addEventListener("mouseleave", () => {
+        timesHovered--;
+    }) 
 
-// })();
+    return { main, p1, nameDiv }
+})();
