@@ -71,7 +71,6 @@ const Game = (() => {
                 winner = true;
             }
             if(winner === true) {
-                const body = document.
                 Array.from(Gameboard.divs).forEach(div => {
                     div.classList.add("disable");
                 })
@@ -81,28 +80,6 @@ const Game = (() => {
     }
     return { winningArr, checkWinner }
 })();
-//display functions
-const displayController = (() => {
-    const createTextBox = () => {
-        const div = document.createElement("div")
-        const input = document.createElement("input");
-        const submitBtn = document.createElement("button");
-        div.classList.add("name")
-        submitBtn.innerText = "Submit";
-        input.setAttribute("type", "text");
-        input.setAttribute("value", "Player 1");
-        input.classList.add("input");
-        submitBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            display.p1.innerText = input.value;
-            display.nameDiv.appendChild(div);
-            div.appendChild(input);
-            div.appendChild(submitBtn);
-            console.log(display.nameDiv);
-        })
-    }
-    return { createTextBox }
-})();
 
 //display buttons, player names, who won
 const display = (() => {
@@ -110,6 +87,7 @@ const display = (() => {
     let timesHovered = 0;
     const main = document.getElementById("main")
     const resetBtn = document.createElement("button");
+
     resetBtn.innerText = "Play again";
     resetBtn.addEventListener("click", () => {
         location.reload();
@@ -117,17 +95,48 @@ const display = (() => {
     resetBtn.classList.add("btn");
     main.appendChild(resetBtn); 
     const nameDiv = document.getElementById("nameDiv");
-    const p1 = document.getElementById("player1");
+
+    //player 1 display elements
+    const p1 = document.getElementById("p1Div");
+    const p1para = document.getElementById("player1");
+    const p1inputDiv = document.getElementById("input1");
+    const p1input = document.getElementById("p1Name");
+    const p1btn = document.getElementById("p1Btn");
     p1.addEventListener("mouseenter", () => { 
+        p1inputDiv.style.display = "block";
         if(timesHovered === 0) {
-            displayController.createTextBox;
+            p1btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                p1para.innerText = p1input.value;
+            })
             timesHovered++;
-            console.log(timesHovered)
         }
     });
     p1.addEventListener("mouseleave", () => {
+        p1inputDiv.style.display = "none";
         timesHovered--;
-    }) 
+    })
 
-    return { main, p1, nameDiv }
+    //player 2 display elements
+    const p2 = document.getElementById("p2Div");
+    const p2para = document.getElementById("player2");
+    const p2inputDiv = document.getElementById("input2");
+    const p2input = document.getElementById("p2Name");
+    const p2btn = document.getElementById("p2Btn");
+    p2.addEventListener("mouseenter", () => { 
+        p2inputDiv.style.display = "block";
+        if(timesHovered === 0) {
+            p2btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                p2para.innerText = p2input.value;
+            })
+            timesHovered++;
+        }
+    });
+    p2.addEventListener("mouseleave", () => {
+        p2inputDiv.style.display = "none";
+        timesHovered--;
+    })
+
+    return { main, p1, nameDiv, p1para }
 })();

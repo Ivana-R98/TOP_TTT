@@ -12,8 +12,20 @@
     <main id="main">
         <h1>Tic Tac Toe</h1>
         <div id="nameDiv">
-            <p id="player1">Player 1</p>
-            <p id="player2">Player 2</p>
+            <div id="p1Div">
+                <p id="player1">Player 1</p>
+                <div class="input" id="input1">
+                    <input type="text" name="name" id="p1Name" class="playerDiv"/>
+                    <button type="submit" id="p1Btn" class="playerDiv">Submit</button>
+                </div>
+            </div>
+            <div id="p2Div">
+                <p id="player2">Player 2</p>
+                <div class="input" id="input2">
+                    <input type="text" name="name" id="p2Name" class="playerDiv"/>
+                    <button type="submit" id="p2Btn" class="playerDiv">Submit</button>
+                </div>
+            </div>
         </div>
         <div id="container">
             <div class="item" id="0"></div>
